@@ -42,7 +42,7 @@ class DataLoader(ABC):
         """
         try:
             record = json.loads(line)
-            if Constants.FIELDS.value != list(record.keys()):
+            if not set(Constants.FIELDS.value).issubset(list(record.keys())) or len(Constants.FIELDS.value) != record.__len__():
                 raise LineFormatError
         except json.decoder.JSONDecodeError:
             raise LineFormatError
@@ -101,5 +101,5 @@ class DataLoader(ABC):
         pass
 
     @abstractmethod
-    def resample(self):
+    def get_sample(self):
         pass
