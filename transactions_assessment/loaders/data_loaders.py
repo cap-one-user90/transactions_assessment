@@ -4,6 +4,7 @@ import pandas as pd
 
 
 class TransactionLoader(DataLoader):
+
     def preprocess_data(self) -> pd.DataFrame:
         """
         load in data from text file and convert to

@@ -2,6 +2,7 @@ from transactions_assessment.exceptions import NonExistError, WrongExtError, Lin
 from abc import ABC, abstractmethod
 from pathlib import Path
 from enum import Enum
+import pandas as pd
 import logging
 import json
 
@@ -23,6 +24,20 @@ class DataLoader(ABC):
         self.data_file = data_file
         self.validate_file()
         self.validate_ext()
+
+    def load_unprocessed(self) -> pd.DataFrame:
+        """
+        Loads raw(unchanged) data into a pandas
+        dataframe
+
+        RETURNS
+        ---------
+        df: pd.DataFrame
+            a data frame of unprocessed records
+        """
+        loaded_data: list = self.read_lines()
+        df = pd.DataFrame(loaded_data)
+        return df
 
     def validate_line(self, line: str) -> dict:
         """
