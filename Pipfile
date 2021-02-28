@@ -11,6 +11,9 @@ pytest-runner = "*"
 click = "*"
 transactions-assessment = {editable = true,path = "."}
 pandas = "*"
+ipykernel = "*"
+jupyter = "*"
+pandas-profiling = "*"
 
 [requires]
 python_version = "3.9"

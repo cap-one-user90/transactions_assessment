@@ -10,3 +10,8 @@ build:
 	pipenv --python 3.9 install --dev
 	pipenv run python setup.py bdist_wheel
 
+setup-jupyter:
+	pipenv run python -m ipykernel install --user --name transactions_assessment
+
+notebook:
+	pipenv run jupyter notebook
