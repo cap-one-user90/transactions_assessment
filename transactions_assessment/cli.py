@@ -22,6 +22,7 @@ def load_data(datafile):
     try:
         loader = TransactionLoader(datafile)
         my_df = loader.preprocess_data()
+        print(f'total number of multi_swipes: {my_df["multi_swipe"].sum()}')
     except Exception as exc:
         click.secho(str(exc), err=True, fg='red')
     return

@@ -63,15 +63,15 @@ class DataLoader(ABC):
         """
         data_bundle = []
         counter = 0
+        self.logger.info('Reading data file records')
         for line in open(self.data_file):
             counter += 1
             try:
                 record: dict = self.validate_line(line)
                 data_bundle.append(record)
-                self.logger.debug('Adding line to bundle')
             except LineFormatError:
-                self.logger.warning(f'Line number {counter} is malfomed.. not adding to bundle')
-        self.logger.info(f'{data_bundle.__len__()} lines of {counter} successfully read.')
+                self.logger.warning(f'Line number {counter} is malformed.. skipping')
+        self.logger.info(f'{data_bundle.__len__()} out of {counter} lines successfully read.')
         return data_bundle
 
     def validate_file(self):
