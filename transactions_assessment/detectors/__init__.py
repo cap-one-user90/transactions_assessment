@@ -32,6 +32,7 @@ class Detector(ABC):
         """
         self.logger.info('Training model..')
         self.pipe.fit(data, labels)
+        self.logger.info('Model training complete.')
 
     def print_score(self, train_data, train_labels, test_data, test_labels):
         """
@@ -54,8 +55,8 @@ class Detector(ABC):
         fp = con_mat[1][1]
         fn = con_mat[1][0]
         f1_score = tp / (tp + (.5*(fp + fn)))
-        print(f'true positive: {tp} true negative: {tn} '
-              f'false_positive: {fp} false negative: {fn} '
+        print(f'true positive: {tp} true negative: {tn} \n'
+              f'false_positive: {fp} false negative: {fn} \n'
               f'f1 score: {f1_score}')
 
     def plot_confusion(self, data, labels):
