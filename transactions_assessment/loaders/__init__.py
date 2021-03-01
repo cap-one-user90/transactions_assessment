@@ -18,12 +18,13 @@ class Constants(Enum):
 
 
 class DataLoader(ABC):
-    def __init__(self, data_file: str):
+    def __init__(self, data_file: str, limit=0):
         self.logger = logging.getLogger(__name__)
         self.logger.debug(f'{__name__} entered')
         self.data_file = data_file
         self.validate_file()
         self.validate_ext()
+        self.limit = limit
 
     def load_unprocessed(self) -> pd.DataFrame:
         """
@@ -86,6 +87,8 @@ class DataLoader(ABC):
                 data_bundle.append(record)
             except LineFormatError:
                 self.logger.warning(f'Line number {counter} is malformed.. skipping')
+            if counter == self.limit:
+                break
         self.logger.info(f'{data_bundle.__len__()} out of {counter} lines successfully read.')
         return data_bundle
 

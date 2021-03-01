@@ -14,6 +14,9 @@ pandas = "*"
 ipykernel = "*"
 jupyter = "*"
 pandas-profiling = "*"
+scikit-learn = "*"
+matplotlib = "*"
+imbalanced-learn = "*"
 
 [requires]
 python_version = "3.9"
