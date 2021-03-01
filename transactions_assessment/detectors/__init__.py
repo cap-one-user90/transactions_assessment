@@ -8,6 +8,10 @@ from abc import ABC
 class Detector(ABC):
 
     @property
+    def logger(self):
+        raise NotImplementedError
+
+    @property
     def pipe(self):
         raise NotImplementedError
 
@@ -15,18 +19,18 @@ class Detector(ABC):
     def param_grid(self):
         raise NotImplementedError
 
-    def set_samples(self, data, labels, sampling_strategy=0.5):
+    def set_samples(self,  sampling_strategy=None):
         """
         set the sample size
         """
-        sampler = RandomOverSampler(sampling_strategy=sampling_strategy)
-        x_sample, y_sample = sampler.fit_resample(data, labels)
-        return x_sample, y_sample
+        if sampling_strategy:
+            self.pipe.steps.insert(0, ['sampler', RandomOverSampler(sampling_strategy=sampling_strategy)])
 
     def train(self, data, labels):
         """
         fit the model
         """
+        self.logger.info('Training model..')
         self.pipe.fit(data, labels)
 
     def print_score(self, train_data, train_labels, test_data, test_labels):

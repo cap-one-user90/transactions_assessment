@@ -1,11 +1,17 @@
 from transactions_assessment.detectors import Detector
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
+from imblearn.pipeline import Pipeline
+import logging
 
 
 class RFDetector(Detector):
-    pipe = make_pipeline(StandardScaler(), RandomForestClassifier())
+    logger = logging.getLogger('RFDetector')
+
+    pipe = Pipeline([
+        ('scaler', StandardScaler()),
+        ('rf', RandomForestClassifier(bootstrap=True))
+    ])
 
     param_grid = {'randomforestclassifier__n_estimators': [50, 100, 200],
                   'randomforestclassifier__max_depth': [None, 10, 30, 50, 70, 100],
@@ -13,14 +19,14 @@ class RFDetector(Detector):
                   'randomforestclassifier__max_features': ['sqrt', 'auto']
                   }
 
-    def inject_params(self, model_params: dict):
+    def use_bootstrap(self, max_samples: float):
         """
-        input a dictionary of parameters to be
-        used in the model pipeline
-
-        PARAMS
-        -----------
-        model_params: dict
-            dictionary of model parameters
+        retrieve current params from random
+        forest and add on max samples param
+        and set bootstrap to True
+        :param max_samples:
+        :return:
         """
-        self.pipe = make_pipeline(StandardScaler(), RandomForestClassifier(**model_params))
+        params_dict = self.pipe.get_params()
+        params_dict['rf__max_samples'] = max_samples
+        self.pipe.set_params(**params_dict)
