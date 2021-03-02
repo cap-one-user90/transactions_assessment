@@ -46,6 +46,7 @@ class ModelDataLoader(DataLoader):
         df = pd.DataFrame(loaded_data)
         df['transactionDateTime'] = df.transactionDateTime.apply(
             lambda k: datetime.strptime(k.replace('T', ' '), '%Y-%m-%d %H:%M:%S'))
+        df = df.sort_values('transactionDateTime').reset_index()
         df['multi_swipe'] = detect_multi_swipe(300, df)
         labels = df.isFraud.astype(int)
         df.drop('isFraud', axis=1, inplace=True)
@@ -95,7 +96,6 @@ def detect_multi_swipe(time_window: int, df: pd.DataFrame) -> list:
         whether a transaction is multi-swipe (1)
         or not (0)
     """
-    df.sort_values(by=['transactionDateTime'], inplace=True)
     multi_swipe_col = [0]
     for idx, dt in enumerate(df.transactionDateTime):
         if idx == 0:
