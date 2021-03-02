@@ -2,6 +2,7 @@ from transactions_assessment.detectors import Detector
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from imblearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
 import logging
 
 
@@ -10,6 +11,7 @@ class RFDetector(Detector):
 
     pipe = Pipeline([
         ('scaler', StandardScaler()),
+        ('pca', PCA(n_components=2)),
         ('rf', RandomForestClassifier(bootstrap=True, n_estimators=500))
     ])
 

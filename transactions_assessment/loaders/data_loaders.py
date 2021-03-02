@@ -1,5 +1,6 @@
 from transactions_assessment.loaders import DataLoader
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 from datetime import datetime
 import pandas as pd
 
@@ -49,18 +50,22 @@ class ModelDataLoader(DataLoader):
         labels = df.isFraud.astype(int)
         df.drop('isFraud', axis=1, inplace=True)
         df = self.encode_cats(df)
+        df.drop(['echoBuffer', 'merchantCity', 'merchantState', 'merchantZip', 'posOnPremises', 'recurringAuthInd',
+                 'transactionDateTime'], axis=1, inplace=True)
         x_train, y_train, x_test, y_test = train_test_split(df, labels, test_size=0.2)
 
         return x_train, y_train, x_test, y_test
 
     def encode_cats(self, df: pd.DataFrame):
         """
-        process data
+        encode categorical variables
         """
-        df.drop(['accountNumber', 'customerId', 'transactionDateTime', 'merchantName', 'merchantCategoryCode',
-                 'currentExpDate', 'accountOpenDate','dateOfLastAddressChange', 'cardCVV', 'enteredCVV',
-                 'cardLast4Digits', 'echoBuffer', 'merchantCity', 'merchantState', 'merchantZip', 'posOnPremises',
-                 'recurringAuthInd'],  axis=1, inplace=True)
+        label_encoder = LabelEncoder()
+        cat_cols = ['accountNumber', 'customerId', 'merchantName', 'merchantCategoryCode',
+                    'currentExpDate', 'accountOpenDate', 'dateOfLastAddressChange', 'cardCVV', 'enteredCVV',
+                    'cardLast4Digits']
+        for col in cat_cols:
+            df[col] = label_encoder.fit_transform(df[col])
         processed_df = pd.get_dummies(df, columns=['merchantCountryCode', 'posEntryMode', 'posConditionCode',
                                                    'transactionType', 'acqCountry'], drop_first=True)
         return processed_df
