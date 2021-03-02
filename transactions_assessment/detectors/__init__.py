@@ -61,6 +61,6 @@ class Detector(ABC):
         find best hyper-parameters
         """
         grid = RandomizedSearchCV(self.pipe, param_distributions=self.param_grid, n_iter=n_iter,
-                                  cv=cv, scoring='precision', refit='precision')
+                                  cv=cv, scoring='f1_macro', refit='f1_macro')
         grid.fit(data, labels)
         print(f'best params: {grid.best_params_} \n best score: {grid.best_score_}')
