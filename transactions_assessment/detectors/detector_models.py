@@ -11,8 +11,7 @@ class RFDetector(Detector):
 
     pipe = Pipeline([
         ('scaler', StandardScaler()),
-        ('pca', PCA(n_components=20)),
-        ('rf', RandomForestClassifier(bootstrap=True, n_estimators=500))
+        ('rf', RandomForestClassifier(bootstrap=True))
     ])
 
     param_grid = {'rf__n_estimators': [50, 100, 200, 500],

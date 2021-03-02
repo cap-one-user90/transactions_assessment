@@ -42,9 +42,11 @@ def fit_model(datafile, limit):
         detector = RFDetector()
         detector.set_samples(sampling_strategy='minority')
         detector.use_bootstrap(max_samples=.05)
+        detector.pipe.set_params(**{'rf__n_estimators': 200, 'rf__min_samples_split': 8, 'rf__max_samples': 0.5, 'rf__max_features': 'auto', 'rf__max_depth': 50})
         detector.train(x_train, y_train)
+#        detector.grid_search(x_train, y_train, n_iter=20)
         detector.print_score(x_train, y_train, x_test, y_test)
-        detector.print_confusion(x_train, y_train)
+        detector.print_confusion(x_test, y_test)
         plot_precision_recall_curve(detector.pipe, x_test, y_test)
         plt.show()
 
