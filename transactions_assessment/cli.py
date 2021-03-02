@@ -8,6 +8,9 @@ from logging.config import dictConfig
 import click
 import sys
 
+import matplotlib.pyplot as plt
+from sklearn.metrics import plot_precision_recall_curve
+
 dictConfig(logging_config)
 
 
@@ -42,6 +45,8 @@ def fit_model(datafile, limit):
         detector.train(x_train, y_train)
         detector.print_score(x_train, y_train, x_test, y_test)
         detector.print_confusion(x_train, y_train)
+        plot_precision_recall_curve(detector.pipe, x_test, y_test)
+        plt.show()
 
     except Exception as exc:
         click.secho(str(exc), err=True, fg='red')

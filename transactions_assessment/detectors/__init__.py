@@ -1,4 +1,4 @@
-from sklearn.metrics import confusion_matrix, plot_confusion_matrix
+from sklearn.metrics import classification_report, plot_confusion_matrix
 from sklearn.model_selection import RandomizedSearchCV
 from imblearn.over_sampling import RandomOverSampler
 import matplotlib.pyplot as plt
@@ -49,15 +49,8 @@ class Detector(ABC):
         a fitted model
         """
         predictions = self.pipe.predict(data)
-        con_mat = confusion_matrix(labels, predictions)
-        tn = con_mat[0][0]
-        tp = con_mat[0][1]
-        fp = con_mat[1][1]
-        fn = con_mat[1][0]
-        f1_score = tp / (tp + (.5*(fp + fn)))
-        print(f'true positive: {tp} true negative: {tn} \n'
-              f'false_positive: {fp} false negative: {fn} \n'
-              f'f1 score: {f1_score}')
+        con_report = classification_report(labels, predictions)
+        print(con_report)
 
     def plot_confusion(self, data, labels):
         plot_confusion_matrix(self.pipe, data, labels, cmap=plt.cm.summer)
