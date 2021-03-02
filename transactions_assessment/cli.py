@@ -42,11 +42,7 @@ def fit_model(datafile, limit):
         detector = RFDetector()
         detector.set_samples(sampling_strategy='minority')
         detector.use_bootstrap(max_samples=.05)
-#        detector.pipe.set_params(**{'rf__n_estimators': 200, 'rf__min_samples_split': 8, 'rf__max_samples': 0.5, 'rf__max_features': 'auto', 'rf__max_depth': 50})
-#        detector.pipe.set_params(**{'rf__n_estimators': 500, 'rf__min_samples_split': 4, 'rf__max_samples': 0.1, 'rf__max_features': 'auto', 'rf__max_depth': 10})
-        # gets precision of .08, recal .71
         detector.pipe.set_params(**{'rf__n_estimators': 500, 'rf__min_samples_split': 2, 'rf__max_samples': 0.5, 'rf__max_features': 'auto','rf__max_depth': 70})
-        # should get around .68
 #        detector.grid_search(x_train, y_train, n_iter=20, cv=3)
         detector.train(x_train, y_train)
         detector.print_score(x_train, y_train, x_test, y_test)

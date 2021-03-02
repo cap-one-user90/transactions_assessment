@@ -53,7 +53,7 @@ class ModelDataLoader(DataLoader):
         df = self.encode_cats(df)
         df.drop(['echoBuffer', 'merchantCity', 'merchantState', 'merchantZip', 'posOnPremises', 'recurringAuthInd',
                  'transactionDateTime'], axis=1, inplace=True)
-        x_train, y_train, x_test, y_test = train_test_split(df, labels, test_size=0.2)
+        x_train, y_train, x_test, y_test = train_test_split(df, labels, test_size=0.2, random_state=40)
 
         return x_train, y_train, x_test, y_test
 
