@@ -23,9 +23,6 @@ class TransactionLoader(DataLoader):
         df['multi_swipe'] = detect_multi_swipe(300, df)
         return df
 
-    def get_sample(self):
-        pass
-
 
 class ModelDataLoader(DataLoader):
     def preprocess_data(self) -> tuple:
@@ -67,9 +64,6 @@ class ModelDataLoader(DataLoader):
         processed_df = pd.get_dummies(df, columns=['merchantCountryCode', 'posEntryMode', 'posConditionCode',
                                                    'transactionType', 'acqCountry'], drop_first=True)
         return processed_df
-
-    def get_sample(self):
-        pass
 
 
 def detect_multi_swipe(time_window: int, df: pd.DataFrame) -> list:

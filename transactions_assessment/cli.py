@@ -37,11 +37,11 @@ def fit_model(datafile, limit):
         model_loader = ModelDataLoader(datafile, limit)
         x_train, x_test, y_train, y_test = model_loader.preprocess_data()
         detector = RFDetector()
-        detector.set_samples(sampling_strategy=0.5)
-        detector.use_bootstrap(max_samples=.1)
+        detector.set_samples(sampling_strategy='minority')
+        detector.use_bootstrap(max_samples=.05)
         detector.train(x_train, y_train)
         detector.print_score(x_train, y_train, x_test, y_test)
-        detector.print_confusion(x_test, y_test)
+        detector.print_confusion(x_train, y_train)
 
     except Exception as exc:
         click.secho(str(exc), err=True, fg='red')

@@ -117,7 +117,3 @@ class DataLoader(ABC):
     @abstractmethod
     def preprocess_data(self):
         pass
-
-    @abstractmethod
-    def get_sample(self):
-        pass
