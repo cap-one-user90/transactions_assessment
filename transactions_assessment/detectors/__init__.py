@@ -82,7 +82,9 @@ class Detector(ABC):
         cv: int
             cross validation folds
         """
+        self.logger.info(f'Initializing random grid search with {n_iter} iterations and {cv} folds')
         grid = RandomizedSearchCV(self.pipe, param_distributions=self.param_grid, n_iter=n_iter,
                                   cv=cv, scoring='f1_macro', refit='f1_macro')
+        self.logger.info('Starting grid search')
         grid.fit(data, labels)
         print(f'best params: {grid.best_params_} \n best score: {grid.best_score_}')
