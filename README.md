@@ -16,7 +16,7 @@ There are a couple of different ways to use this package.
 4. If this package is installed correctly, you should be able to run all the cells in that notebook
 
 * You can also test out the package from the command line (after installing) by running:\
- ```transaction_assessment train-model --limit 100000```. Removing the limit flag will use all of the data.
+ ```transactions_assessment train-model --limit 100000``` (or use ```transactions-assessment train-model``` to use all of the data
 
 #### Run package interactively from virtualenv
 Pre-reqs: ```pyenv >= 1.2.23```
