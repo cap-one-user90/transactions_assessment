@@ -6,13 +6,15 @@ This is the data science assessment for Capitol One
 Results can be found in the ```notebooks/Transactions Questions.ipynb``` notebook
 
 ## How to Use
-There are a couple of different ways to use this package.\
+There are a couple of different ways to use this package.
 
-#### Use ```pip ``` to install the package locally (this is probably the easiest way):
+#### Use pip to install the package locally (this is probably the easiest way):
 1. Install/activate ```python 3.9.0```
 2. Navigate to the project directory and run ```pip  setup.py install```
+    - or you can install directly from github: 
 3. Open up a ```jupyter notebook``` and open the ```Transaction Questions.ipynb``` notebook.
 4. If this package is installed correctly, you should be able to run all the cells in that notebook
+
 
 #### Run package interactively from virtualenv
 Pre-reqs: ```pyenv >= 1.2.23```\
