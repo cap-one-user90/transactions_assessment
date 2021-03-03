@@ -21,7 +21,7 @@ def main(args=None):
 @main.command()
 @click.option('--datafile')
 @click.option('--limit', default=None, type=int)
-def fit_model(datafile, limit):
+def train_model(datafile, limit):
     try:
         model_loader = ModelDataLoader(datafile, limit)
         x_train, x_test, y_train, y_test = model_loader.preprocess_data()
