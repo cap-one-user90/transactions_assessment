@@ -15,6 +15,8 @@ There are a couple of different ways to use this package.
 3. Open up a ```jupyter notebook``` and open the ```Transaction Questions.ipynb``` notebook.
 4. If this package is installed correctly, you should be able to run all the cells in that notebook
 
+* You can also test out the package from the command line (after installing) by running:\
+ ```transactions_assessment train-model --limit 100000``` (or use ```transactions_ssessment train-model``` to use all of the data
 
 #### Run package interactively from virtualenv
 Pre-reqs: ```pyenv >= 1.2.23```
