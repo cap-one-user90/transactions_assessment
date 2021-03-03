@@ -20,8 +20,8 @@ There are a couple of different ways to use this package.
 Pre-reqs: ```pyenv >= 1.2.23```
 You can re-create this virtual-environment by using the following steps:
 From the project directory run:
-1. ```$ make init```\
-2.```$ make build```
+1. ```$ make init```
+2. ```$ make build```
 3. ```$ make setup-jupyter```
 4. ```$ make notebook``` (opens jupyter in browswer window -go to ```localhost:8888``` if not automatically directed)
 * if any of these steps return an error, you can enter the commands found in the ```Makefile``` in this project manually
