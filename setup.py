@@ -10,15 +10,15 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 NAME = 'transactions_assessment'
-DESCRIPTION = 'ye olde fraude assessment'
+DESCRIPTION = 'ye olde fraude detector'
 URL = 'https://email.com/mu.mewstopher/transactions_assessment'
-EMAIL = 'mu.mewstopher@email.com'
-AUTHOR = 'mewstopher mewington'
+EMAIL = 'email@email.com'
+AUTHOR = 'capn'
 REQUIRES_PYTHON = '>=3.7.0'
 VERSION = None
 
 REQUIRED = [
-    'Click',
+    'Click', 'pandas', 'ipykernel', 'jupyter', 'pandas-profiling', 'scikit-learn', 'matplotlib', 'imbalanced-learn'
 ]
 EXTRAS = {}
 REQUIRED_TEST = ['pytest', ]
@@ -85,8 +85,7 @@ setup(
     url=URL,
     install_requires=REQUIRED,
     extras_requires=EXTRAS,
-    packages=find_packages(include=['transactions_assessment', 'click', 'pandas', 'ipykernel', 'jupyter',
-                                    'pandas-profiling', 'scikit-learn', 'matplotlib', 'imbalanced-learn'],
+    packages=find_packages(include=['transactions_assessment'],
                            exclude=["tests", "*.tests", "*tests.*", "tests.*"]),
     package_data={'': []},
     include_package_data=True,
