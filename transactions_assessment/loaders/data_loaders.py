@@ -48,6 +48,7 @@ class ModelDataLoader(DataLoader):
             lambda k: datetime.strptime(k.replace('T', ' '), '%Y-%m-%d %H:%M:%S'))
         df = df.sort_values('transactionDateTime').reset_index()
         df['multi_swipe'] = detect_multi_swipe(300, df)
+        df['fraud_target'] = df.merchantName.apply(lambda k: 1 if k.lower() == 'fresh flowers' else 0)
         labels = df.isFraud.astype(int)
         df.drop('isFraud', axis=1, inplace=True)
         df = self.encode_cats(df)

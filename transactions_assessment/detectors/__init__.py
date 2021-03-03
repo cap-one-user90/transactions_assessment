@@ -21,7 +21,17 @@ class Detector(ABC):
 
     def set_samples(self,  sampling_strategy=None):
         """
-        set the sample size
+        use over-sampling to duplicate rows of minority
+        class
+
+        PARAMS
+        ----------
+        sampling_strategy: str
+            sampling strategy to use. 'minority'
+            can be used to sample from minority
+            class until numbers are even between
+            classes. otherwise use values between
+            0 and 1
         """
         if sampling_strategy:
             self.pipe.steps.insert(0, ['sampler', RandomOverSampler(sampling_strategy=sampling_strategy)])
