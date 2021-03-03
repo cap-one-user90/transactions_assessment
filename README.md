@@ -19,8 +19,8 @@ There are a couple of different ways to use this package.
  ```transactions_assessment train-model --limit 100000``` (or use ```transactions_ssessment train-model``` to use all of the data
 
 #### Run package interactively from virtualenv
-Pre-reqs: ```pyenv >= 1.2.23```\
-- ```$PYPY_URL``` needs to be set to appropriate url
+Pre-reqs: ```pyenv >= 1.2.23```
+- ```$PYPY_URL``` needs to be set to appropriate url\
 You can re-create this virtual-environment by using the following steps:
 From the project directory run:
 1. ```$ make init```
