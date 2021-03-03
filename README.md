@@ -9,7 +9,7 @@ Results can be found in the ```notebooks/Transactions Questions.ipynb``` noteboo
 There are a couple of different ways to use this package.
 
 #### Use pip to install the package locally (this is probably the easiest way):
-1. Install/activate ```python 3.9.0```
+1. Install/activate ```python 3.9.0``` (This has been tested with ```3.8.8``` and should work with any version above ```3.7``` but no garantees)
 2. Navigate to the project directory and run ```pip  setup.py install```
     - or you can install directly from github: ```pip install git+https://github.com/cap-one-user90/transactions_assessment.git```
 3. Open up a ```jupyter notebook``` and open the ```Transaction Questions.ipynb``` notebook.
