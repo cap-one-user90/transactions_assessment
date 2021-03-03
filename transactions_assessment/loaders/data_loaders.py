@@ -2,7 +2,17 @@ from transactions_assessment.loaders import DataLoader
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from datetime import datetime
+from enum import Enum
 import pandas as pd
+
+
+class Constants(Enum):
+    CAT_VARS = ['accountNumber', 'customerId', 'merchantName', 'merchantCategoryCode',
+                'currentExpDate', 'accountOpenDate', 'dateOfLastAddressChange', 'cardCVV', 'enteredCVV',
+                'cardLast4Digits']
+    DROP_VARS = ['echoBuffer', 'merchantCity', 'merchantState', 'merchantZip', 'posOnPremises', 'recurringAuthInd',
+                 'transactionDateTime']
+    DUMMY_VARS = ['merchantCountryCode', 'posEntryMode', 'posConditionCode', 'transactionType', 'acqCountry']
 
 
 class TransactionLoader(DataLoader):
@@ -52,8 +62,7 @@ class ModelDataLoader(DataLoader):
         labels = df.isFraud.astype(int)
         df.drop('isFraud', axis=1, inplace=True)
         df = self.encode_cats(df)
-        df.drop(['echoBuffer', 'merchantCity', 'merchantState', 'merchantZip', 'posOnPremises', 'recurringAuthInd',
-                 'transactionDateTime'], axis=1, inplace=True)
+        df.drop(Constants.DROP_VARS.value, axis=1, inplace=True)
         x_train, y_train, x_test, y_test = train_test_split(df, labels, test_size=0.2, random_state=40)
 
         return x_train, y_train, x_test, y_test
@@ -63,13 +72,10 @@ class ModelDataLoader(DataLoader):
         encode categorical variables
         """
         label_encoder = LabelEncoder()
-        cat_cols = ['accountNumber', 'customerId', 'merchantName', 'merchantCategoryCode',
-                    'currentExpDate', 'accountOpenDate', 'dateOfLastAddressChange', 'cardCVV', 'enteredCVV',
-                    'cardLast4Digits']
+        cat_cols = Constants.CAT_VARS.value
         for col in cat_cols:
             df[col] = label_encoder.fit_transform(df[col])
-        processed_df = pd.get_dummies(df, columns=['merchantCountryCode', 'posEntryMode', 'posConditionCode',
-                                                   'transactionType', 'acqCountry'], drop_first=True)
+        processed_df = pd.get_dummies(df, columns=Constants.DUMMY_VARS.value, drop_first=True)
         return processed_df
 
 

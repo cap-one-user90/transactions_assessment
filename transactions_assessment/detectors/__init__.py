@@ -2,6 +2,7 @@ from sklearn.metrics import classification_report, plot_confusion_matrix
 from sklearn.model_selection import RandomizedSearchCV
 from imblearn.over_sampling import RandomOverSampler
 import matplotlib.pyplot as plt
+import pandas as pd
 from abc import ABC
 
 
@@ -36,7 +37,7 @@ class Detector(ABC):
         if sampling_strategy:
             self.pipe.steps.insert(0, ['sampler', RandomOverSampler(sampling_strategy=sampling_strategy)])
 
-    def train(self, data, labels):
+    def train(self, data: pd.DataFrame, labels: pd.Series):
         """
         fit the model
         """
@@ -53,22 +54,33 @@ class Detector(ABC):
         test_score = self.pipe.score(test_data, test_labels)
         print(f'train score: {train_score} test score: {test_score}')
 
-    def print_confusion(self, data, labels):
+    def print_confusion(self, data: pd.DataFrame, labels: pd.Series):
         """
-        print the confusion matrix for
+        print the classification report for
         a fitted model
         """
         predictions = self.pipe.predict(data)
         con_report = classification_report(labels, predictions)
         print(con_report)
 
-    def plot_confusion(self, data, labels):
+    def plot_confusion(self, data: pd.DataFrame, labels: pd.Series):
         plot_confusion_matrix(self.pipe, data, labels, cmap=plt.cm.summer)
         plt.show()
 
-    def grid_search(self, data, labels, n_iter=50, cv=3):
+    def grid_search(self, data: pd.DataFrame, labels: pd.Series, n_iter=50, cv=3):
         """
         find best hyper-parameters
+
+        PARAMS
+        ---------
+        data: pd.DataFrame
+            training data
+        labels: pd.Series
+            labels
+        n_iter: int
+            number of iterations to try
+        cv: int
+            cross validation folds
         """
         grid = RandomizedSearchCV(self.pipe, param_distributions=self.param_grid, n_iter=n_iter,
                                   cv=cv, scoring='f1_macro', refit='f1_macro')
