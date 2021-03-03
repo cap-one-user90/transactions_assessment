@@ -8,8 +8,6 @@ from logging.config import dictConfig
 import click
 import sys
 
-import matplotlib.pyplot as plt
-from sklearn.metrics import plot_precision_recall_curve
 
 dictConfig(logging_config)
 
@@ -22,18 +20,6 @@ def main(args=None):
 
 @main.command()
 @click.option('--datafile')
-def load_data(datafile):
-    try:
-        loader = TransactionLoader(datafile)
-        my_df = loader.load_unprocessed()
-        print(f'total number of multi_swipes: {my_df["multi_swipe"].sum()}')
-    except Exception as exc:
-        click.secho(str(exc), err=True, fg='red')
-    return
-
-
-@main.command()
-@click.option('--datafile')
 @click.option('--limit', default=None, type=int)
 def fit_model(datafile, limit):
     try:
@@ -42,13 +28,11 @@ def fit_model(datafile, limit):
         detector = RFDetector()
         detector.set_samples(sampling_strategy='minority')
         detector.use_bootstrap(max_samples=.05)
-        detector.pipe.set_params(**{'rf__n_estimators': 500, 'rf__min_samples_split': 2, 'rf__max_samples': 0.5, 'rf__max_features': 'auto','rf__max_depth': 70})
-#        detector.grid_search(x_train, y_train, n_iter=20, cv=3)
+        detector.pipe.set_params(**{'rf__n_estimators': 500, 'rf__min_samples_split': 2, 'rf__max_samples': 0.5,
+                                    'rf__max_features': 'auto','rf__max_depth': 70})
         detector.train(x_train, y_train)
         detector.print_score(x_train, y_train, x_test, y_test)
         detector.print_confusion(x_test, y_test)
-        plot_precision_recall_curve(detector.pipe, x_test, y_test)
-        plt.show()
 
     except Exception as exc:
         click.secho(str(exc), err=True, fg='red')
